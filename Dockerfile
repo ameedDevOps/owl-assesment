@@ -4,9 +4,13 @@
 FROM node:20-alpine AS deps
 
 WORKDIR /app
-COPY app/package*.json ./
-RUN npm ci --only=production
 
+COPY app/package*.json ./
+
+# Install prod deps AND clean npm cache
+RUN npm ci --omit=dev \
+ && npm cache clean --force \
+ && rm -rf /root/.npm
 
 # ===============================
 # Stage 2: Runtime (Non-Root)
@@ -18,7 +22,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
 
-# Copy dependencies
+# Copy only node_modules (no npm cache)
 COPY --from=deps /app/node_modules ./node_modules
 
 # Copy app source
