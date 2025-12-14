@@ -13,3 +13,8 @@ variable "public_subnets" {
 variable "private_subnets" {
   default = ["10.0.101.0/24", "10.0.102.0/24"]
 }
+
+variable "trusted_cidr" {
+  description = "Trusted CIDR for EKS API access"
+  default     = "10.0.0.0/16"
+}
