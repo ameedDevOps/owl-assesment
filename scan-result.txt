@@ -1,0 +1,26 @@
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 23 files tracked by git with 145 Code rules:
+                                                                                
+  Language      Rules   Files          Origin      Rules                        
+ ─────────────────────────────        ───────────────────                       
+  <multilang>       2      46          Community     145                        
+  terraform         5       9                                                   
+  yaml              7       7                                                   
+  js               16       1                                                   
+  dockerfile        2       1                                                   
+                                                                                
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+Some files were skipped or only partially analyzed.
+  Scan was limited to files tracked by git.
+
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
+CI scan completed successfully.
+  Found 0 findings (0 blocking) from 145 rules.
+  No blocking findings so exiting with code 0

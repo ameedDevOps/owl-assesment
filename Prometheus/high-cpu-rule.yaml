@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: node-app-cpu-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: node-app.cpu.rules
+      rules:
+        - alert: NodeAppHighCPUUsage
+          expr: |
+            sum by (pod) (
+              rate(container_cpu_usage_seconds_total{
+                namespace="node-app",
+                container!="",
+                pod!=""
+              }[5m])
+            ) > 0.8
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "High CPU usage in node-app"
+            description: "Pod {{ $labels.pod }} in node-app namespace is using more than 80% CPU."
