@@ -18,23 +18,9 @@ resource "aws_iam_role" "flowlogs" {
   })
 }
 
-resource "aws_iam_role_policy" "flowlogs" {
-  role = aws_iam_role.flowlogs.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid    = "AllowWriteToSpecificLogGroup"
-        Effect = "Allow"
-        Action = [
-          "logs:CreateLogStream",
-          "logs:PutLogEvents"
-        ]
-        Resource = "${aws_cloudwatch_log_group.flowlogs.arn}:*"
-      }
-    ]
-  })
+resource "aws_iam_role_policy_attachment" "flowlogs_managed" {
+  role       = aws_iam_role.flowlogs.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonVPCFlowLogsRole"
 }
 
 resource "aws_flow_log" "vpc" {
