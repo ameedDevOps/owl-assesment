@@ -1,7 +1,9 @@
 resource "aws_cloudwatch_log_group" "flowlogs" {
   name              = "/aws/vpc/flowlogs"
-  retention_in_days = 30
+  retention_in_days = 365
+  kms_key_id        = aws_kms_key.eks.arn
 }
+
 
 resource "aws_iam_role" "flowlogs" {
   name = "vpc-flowlogs-role"
