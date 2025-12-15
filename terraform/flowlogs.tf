@@ -23,11 +23,17 @@ resource "aws_iam_role_policy" "flowlogs" {
 
   policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [{
-      Effect   = "Allow"
-      Action   = ["logs:CreateLogStream", "logs:PutLogEvents"]
-      Resource = "*"
-    }]
+    Statement = [
+      {
+        Sid    = "AllowWriteToSpecificLogGroup"
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "${aws_cloudwatch_log_group.flowlogs.arn}:*"
+      }
+    ]
   })
 }
 
